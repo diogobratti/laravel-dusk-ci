@@ -1,4 +1,4 @@
-# Running Browser Tests with Laravel Dusk in Gitlab CI/CD Pipelines.
+# Browser Tests with Laravel Dusk in Gitlab CI/CD Pipelines.
 
 
 [![Docker pulls](https://img.shields.io/docker/pulls/chilio/laravel-dusk-ci.svg)](https://hub.docker.com/r/chilio/laravel-dusk-ci)
