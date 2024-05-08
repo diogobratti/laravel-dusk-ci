@@ -12,6 +12,8 @@ $print_info_only = $argv[4];
 $compatible = FALSE;
 if ($system_chromedriver == $laravel_chromedriver) {
     $compatible = TRUE;
+} elseif ($system_chrome > 115 && fetchChromeVersionFromUrl($system_chrome) == $laravel_chromedriver) {
+    $compatible = TRUE;
 } else {
     foreach ($compatibilityMatrix as $compatPair) {
         if ($compatPair[0] == $laravel_chromedriver && $compatPair[1] == $system_chrome){

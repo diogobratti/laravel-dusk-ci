@@ -1,4 +1,4 @@
-FROM ubuntu:focal
+FROM ubuntu:noble
 MAINTAINER Chilio
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -98,12 +98,13 @@ RUN \
   && php /tmp/composer-setup.php --filename=composer --install-dir=$COMPOSER_HOME
 
 RUN \
-  apt-get install -yq --fix-missing xvfb gconf2 fonts-ipafont-gothic xfonts-cyrillic xfonts-100dpi xfonts-75dpi xfonts-base \
+  apt-get install -yq --fix-missing xvfb dconf-editor fonts-ipafont-gothic xfonts-cyrillic xfonts-100dpi xfonts-75dpi xfonts-base \
     xfonts-scalable \
   && CHROMEDRIVER_VERSION=`curl  https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions.json | jq -r .channels.Stable.version` \
   && echo $CHROMEDRIVER_VERSION \
   && curl -sS -o /tmp/chromedriver_latest.zip \
-    https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/$CHROMEDRIVER_VERSION/linux64/chromedriver-linux64.zip \
+    https://storage.googleapis.com/chrome-for-testing-public/$CHROMEDRIVER_VERSION/linux64/chromedriver-linux64.zip \
+    # https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/$CHROMEDRIVER_VERSION/linux64/chromedriver-linux64.zip \
   && dir -lh /tmp \
   && unzip -j /tmp/chromedriver_latest.zip chromedriver-linux64/chromedriver -d /tmp \
   && rm /tmp/chromedriver_latest.zip \
@@ -136,7 +137,7 @@ ADD configs/supervisord.conf /etc/supervisor/supervisord.conf
 ADD configs/nginx-default-site /etc/nginx/sites-available/default
 
 RUN npm set progress=false
-RUN mkdir /run/php
+RUN mkdir -p /run/php
 
 ADD commands/xvfb.init.sh /etc/init.d/xvfb
 RUN chmod +x /etc/init.d/xvfb

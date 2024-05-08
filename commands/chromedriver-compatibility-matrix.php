@@ -104,6 +104,14 @@ $compatibility = [
     '2.34' => '61-63',
     '2.33' => '60-62'
 ];
+function fetchChromeVersionFromUrl($version) {
+    $curlHandle = curl_init('https://chromedriver.storage.googleapis.com/LATEST_RELEASE_' . (string) $version);
+    curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, true);
+    
+    $curlResponse = curl_exec($curlHandle);
+    curl_close($curlHandle);
+    return trim((string) $curlResponse);
+}
 $compatibilityMatrix = [];
 foreach ($compatibility as $driver => $chrome) {
     $chromeversions_temp = explode('-',$chrome);
